@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Description: bongoDev classroom demo - Ubuntu 24.04 LTS + Nginx website with a new VPC
 
 Parameters:
@@ -25,14 +25,14 @@ Resources:
       EnableDnsHostnames: true
       Tags:
         - Key: Name
-          Value: !Sub '${AWS::StackName}-vpc'
+          Value: !Sub "${AWS::StackName}-vpc"
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
       Tags:
         - Key: Name
-          Value: !Sub '${AWS::StackName}-igw'
+          Value: !Sub "${AWS::StackName}-igw"
 
   GatewayAttachment:
     Type: AWS::EC2::VPCGatewayAttachment
@@ -48,7 +48,7 @@ Resources:
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: !Sub '${AWS::StackName}-public-subnet'
+          Value: !Sub "${AWS::StackName}-public-subnet"
 
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
@@ -56,7 +56,7 @@ Resources:
       VpcId: !Ref DemoVPC
       Tags:
         - Key: Name
-          Value: !Sub '${AWS::StackName}-public-rt'
+          Value: !Sub "${AWS::StackName}-public-rt"
 
   DefaultRoute:
     Type: AWS::EC2::Route
@@ -85,7 +85,7 @@ Resources:
           Description: Public HTTP for Nginx demo
       Tags:
         - Key: Name
-          Value: !Sub '${AWS::StackName}-http-sg'
+          Value: !Sub "${AWS::StackName}-http-sg"
 
   UbuntuNginxServer:
     Type: AWS::EC2::Instance
@@ -103,11 +103,11 @@ Resources:
         HttpEndpoint: enabled
       Tags:
         - Key: Name
-          Value: !Sub '${AWS::StackName}-${Environment}-nginx'
+          Value: !Sub "${AWS::StackName}-${Environment}-nginx"
         - Key: Environment
           Value: !Ref Environment
         - Key: Course
-          Value: bongoDev-DevOps
+          Value: bongoDev-DevOps-Homework-V2
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
@@ -153,7 +153,7 @@ Resources:
 Outputs:
   WebsiteURL:
     Description: Open this HTTP URL after EC2 bootstrap completes
-    Value: !Sub 'http://${UbuntuNginxServer.PublicIp}'
+    Value: !Sub "http://${UbuntuNginxServer.PublicIp}"
   InstanceId:
     Description: EC2 instance launched by CloudFormation
     Value: !Ref UbuntuNginxServer
